@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [Serializable]
-public struct HungerComponent : IComponentData
+public struct Hunger : IComponentData
 {
     public float Value;
 }

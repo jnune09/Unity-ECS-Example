@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [Serializable]
-public struct TargetComponent : IComponentData
+public struct Target : IComponentData
 {
     public Entity Entity;
 }

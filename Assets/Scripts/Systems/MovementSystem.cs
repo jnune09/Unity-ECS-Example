@@ -10,7 +10,7 @@ public class MovementSystem : JobComponentSystem
 {
 
     [BurstCompile]
-    struct MovementSystemJob : IJobForEach<PlayerTag, Translation, MoveSpeedComponent>
+    struct MovementSystemJob : IJobForEach<PlayerTag, Translation, MoveSpeed>
     {
 
         public float deltaTime;
@@ -19,7 +19,7 @@ public class MovementSystem : JobComponentSystem
         public bool left;
         public bool right;
 
-        public void Execute([ReadOnly] ref PlayerTag playerTag, ref Translation translation, [ReadOnly] ref MoveSpeedComponent moveSpeed)
+        public void Execute([ReadOnly] ref PlayerTag playerTag, ref Translation translation, [ReadOnly] ref MoveSpeed moveSpeed)
         {
             if (up)
                 translation.Value.y += moveSpeed.Value * deltaTime;

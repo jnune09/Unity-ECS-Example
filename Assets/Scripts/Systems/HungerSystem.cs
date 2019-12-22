@@ -17,7 +17,7 @@ public class HungerSystem : JobComponentSystem
     // The job is also tagged with the BurstCompile attribute, which means
     // that the Burst compiler will optimize it for the best performance.
     [BurstCompile]
-    struct HungerSystemJob : IJobForEach<HungerComponent>
+    struct HungerSystemJob : IJobForEach<Hunger>
     {
         // Add fields here that your job needs to do its work.
         // For example,
@@ -25,7 +25,7 @@ public class HungerSystem : JobComponentSystem
         
         
         
-        public void Execute(ref HungerComponent hungerComponent)
+        public void Execute(ref Hunger hunger)
         {
             // Implement the work to perform for each entity here.
             // You should only access data that is local or that is a
@@ -35,7 +35,7 @@ public class HungerSystem : JobComponentSystem
             // that want to read Rotation component data.
             // For example,
             //     translation.Value += mul(rotation.Value, new float3(0, 0, 1)) * deltaTime;
-            hungerComponent.Value += 1f * deltaTime;
+            hunger.Value += 1f * deltaTime;
 
         }
     }

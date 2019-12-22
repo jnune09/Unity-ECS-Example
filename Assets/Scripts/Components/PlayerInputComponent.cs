@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [Serializable]
-public class PlayerInputComponent : IComponentData
+public class PlayerInput : IComponentData
 {
     public bool moveUp;
     public bool moveDown;
