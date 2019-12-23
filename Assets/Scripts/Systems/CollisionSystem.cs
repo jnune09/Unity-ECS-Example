@@ -9,17 +9,17 @@ using static Unity.Mathematics.math;
 public class CollisionSystem : JobComponentSystem
 {
     [BurstCompile]
-    struct CollisionSystemJob : IJobForEachWithEntity<AABB>
+    struct CollisionSystemJob : IJobForEachWithEntity<AABB, MoveSpeed>
     {
         [ReadOnly] public NativeArray<AABB> colliders;
 
-        public void Execute(Entity entity, int index, ref AABB aabb)
+        public void Execute(Entity entity, int index, ref AABB aabb, ref MoveSpeed moveSpeed)
         {
             for (int j = index + 1; j < colliders.Length; j++)
             {
                 if (SimplePhysics.Intersect(colliders[index], colliders[j]))
                 {
-                    
+                    //moveSpeed.Value = 0;
                     //UnityEngine.Debug.Log("collision");
                 }
             }
@@ -34,11 +34,12 @@ public class CollisionSystem : JobComponentSystem
         {
             All = new ComponentType[] { typeof(AABB) }
         };
-        m_aabbQuery = GetEntityQuery(typeof(AABB) );
+        m_aabbQuery = GetEntityQuery(query);
     }
 
-    protected override JobHandle OnUpdate(JobHandle inputDependencies)
+    protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
+
         var colliders = m_aabbQuery.ToComponentDataArray<AABB>(Allocator.TempJob);
 
         var job = new CollisionSystemJob
@@ -46,7 +47,7 @@ public class CollisionSystem : JobComponentSystem
             colliders = colliders
         };
         
-        var jobHandle = job.Schedule(this, inputDependencies);
+        var jobHandle = job.Schedule(this, inputDeps);
 
         jobHandle.Complete();
 

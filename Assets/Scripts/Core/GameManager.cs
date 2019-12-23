@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        entityManager = World.Active.EntityManager;
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         SpawnPlayer();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             //SpawnPlayer();
             SpawnActor();
@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
             );
 
         entityManager.SetComponentData(player, new Hunger { Value = 10 });
-        entityManager.SetComponentData(player, new MoveSpeed { Value = 4f });
-        entityManager.SetComponentData(player, new Translation { Value = new float3(UnityEngine.Random.Range(-8, 8), 4, 0) });
+        entityManager.SetComponentData(player, new MoveSpeed { Value = 6f });
+        entityManager.SetComponentData(player, new Translation { Value = new float3(UnityEngine.Random.Range(-10, 10), 5, 0) });
         entityManager.SetSharedComponentData(player, new RenderMesh { mesh = quadMesh, material = playerMaterial });
     }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         entityManager.SetComponentData(actor, new Hunger { Value = 10 });
         entityManager.SetComponentData(actor, new MoveSpeed { Value = 4f });
-        entityManager.SetComponentData(actor, new Translation { Value = new float3(UnityEngine.Random.Range(-8, 8), 0, 0) });
+        entityManager.SetComponentData(actor, new Translation { Value = new float3(UnityEngine.Random.Range(-10, 10), 0, 0) });
         entityManager.SetSharedComponentData(actor, new RenderMesh { mesh = quadMesh, material = actorMaterial });
     }
 

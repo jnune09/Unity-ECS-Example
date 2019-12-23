@@ -40,7 +40,7 @@ public class HungerSystem : JobComponentSystem
         }
     }
     
-    protected override JobHandle OnUpdate(JobHandle inputDependencies)
+    protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         var job = new HungerSystemJob();
         
@@ -52,6 +52,6 @@ public class HungerSystem : JobComponentSystem
         
         
         // Now that the job is set up, schedule it to be run. 
-        return job.Schedule(this, inputDependencies);
+        return job.Schedule(this, inputDeps);
     }
 }

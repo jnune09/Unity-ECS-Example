@@ -32,7 +32,7 @@ public class MovementSystem : JobComponentSystem
         }
     }
     
-    protected override JobHandle OnUpdate(JobHandle inputDependencies)
+    protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         var job = new MovementSystemJob();
 
@@ -42,6 +42,6 @@ public class MovementSystem : JobComponentSystem
         job.left = UnityEngine.Input.GetKey(UnityEngine.KeyCode.A);
         job.right = UnityEngine.Input.GetKey(UnityEngine.KeyCode.D);
 
-        return job.Schedule(this, inputDependencies);
+        return job.Schedule(this, inputDeps);
     }
 }

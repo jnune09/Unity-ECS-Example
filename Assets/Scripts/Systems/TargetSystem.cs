@@ -14,9 +14,9 @@ public class TargetSystem : JobComponentSystem
         public float3 position;
     }
 
-    [BurstCompile]
     [RequireComponentTag(typeof(ActorTag))]
-    [ExcludeComponent(typeof(Target))]
+    [ExcludeComponent(typeof(Destination), typeof(Target))]
+    [BurstCompile]
     struct TargetSystemJob : IJobForEachWithEntity<Translation>
     {
         [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<TargetWithPosition> targetWithPositionArray;
@@ -52,6 +52,7 @@ public class TargetSystem : JobComponentSystem
 
             if (target != Entity.Null)
             {
+                entityCommandBuffer.AddComponent(index, entity, new Destination { Value = targetPosition });
                 entityCommandBuffer.AddComponent(index, entity, new Target { Entity = target });
             }
         }
@@ -61,9 +62,10 @@ public class TargetSystem : JobComponentSystem
     protected override void OnCreate()
     {
         endSimulationEntityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        base.OnCreate();   
     }
 
-    protected override JobHandle OnUpdate(JobHandle inputDependencies) 
+    protected override JobHandle OnUpdate(JobHandle inputDeps) 
     {
         EntityQuery m_targetQuery = GetEntityQuery(typeof(PlayerTag), ComponentType.ReadOnly<Translation>());
 
@@ -89,8 +91,8 @@ public class TargetSystem : JobComponentSystem
             targetWithPositionArray = targetWithPositionArray,
             entityCommandBuffer = endSimulationEntityCommandBuffer.CreateCommandBuffer().ToConcurrent()
         };
-        
-        var jobHandle = job.Schedule(this, inputDependencies);
+
+        var jobHandle = job.Schedule(this, inputDeps);
 
         endSimulationEntityCommandBuffer.AddJobHandleForProducer(jobHandle);
 
