@@ -19,6 +19,7 @@ public class TargetSystem : JobComponentSystem
     struct TargetSystemJob : IJobForEachWithEntity<Translation>
     {
         [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<TargetWithPosition> targetWithPositionArray;
+
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
 
         public void Execute(Entity entity, int index, [ReadOnly] ref Translation translation)
@@ -56,16 +57,19 @@ public class TargetSystem : JobComponentSystem
         }
     }
 
+    EntityQuery m_targetQuery;
+
     private EndSimulationEntityCommandBufferSystem endSimulationEntityCommandBuffer;
     protected override void OnCreate()
     {
         endSimulationEntityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-        base.OnCreate();   
+        base.OnCreate();
     }
 
     protected override JobHandle OnUpdate(JobHandle inputDeps) 
     {
-        EntityQuery m_targetQuery = GetEntityQuery(typeof(PlayerTag), ComponentType.ReadOnly<Translation>());
+        // note: move to OnCreate()
+        m_targetQuery = GetEntityQuery(typeof(PlayerTag), ComponentType.ReadOnly<Translation>());
 
         NativeArray<Entity> targetEntityArray = m_targetQuery.ToEntityArray(Allocator.TempJob);
         NativeArray<Translation> targetPositionArray = m_targetQuery.ToComponentDataArray<Translation>(Allocator.TempJob);

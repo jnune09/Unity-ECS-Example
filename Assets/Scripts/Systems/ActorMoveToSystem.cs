@@ -23,7 +23,7 @@ public class ActorMoveToSystem : JobComponentSystem
 
             Translation targetTranslation = translationData[target.Entity];
 
-            if (math.distance(translation.Value, targetTranslation.Value) > 1.25f)
+            if (math.distance(translation.Value, targetTranslation.Value) > 16f)
             {
                 velocity.Direction = targetTranslation.Value - translation.Value;
             }
