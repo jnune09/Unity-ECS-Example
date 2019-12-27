@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour
 
         SpawnPlayer();
         SpawnVendor();
-        SpawnVendor();
-        //SpawnActor();
+        SpawnActor();
 
     }
 
@@ -82,7 +81,7 @@ public class GameManager : MonoBehaviour
             );
 
         entityManager.SetComponentData(actor, new Hunger { Value = 10 });
-        entityManager.SetComponentData(actor, new Speed { Value = 70f });
+        entityManager.SetComponentData(actor, new Speed { Value = 60f });
         entityManager.SetComponentData(actor, new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), 0) });
 
         entityManager.SetSharedComponentData(actor, new RenderMesh { mesh = quadMesh, material = actorMaterial });
@@ -92,9 +91,15 @@ public class GameManager : MonoBehaviour
     {
         Entity vendor = entityManager.CreateEntity(
             typeof(AABB),
+            typeof(Collision),
+            typeof(Direction),
+            typeof(Hunger),
+            typeof(Inventory),
             typeof(LocalToWorld),
             typeof(RenderMesh),
-            typeof(Translation)
+            typeof(Speed),
+            typeof(Translation),
+            typeof(Velocity)
             );
 
         entityManager.SetComponentData(vendor, new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), 0) });

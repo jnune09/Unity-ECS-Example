@@ -17,34 +17,33 @@ public class CollisionSystem : JobComponentSystem
             ref Collision collision
             )
         {
-            collision.Top = false;
-            collision.Bottom = false;
-            collision.Left = false;
-            collision.Right = false;
+            float3 value = new float3();
 
             for (int j = index + 1; j < colliders.Length; j++)
             {
                 if (SimplePhysics.Intersect(colliders[index], colliders[j]))
                 {
-                    bool4 collide = SimplePhysics.Collision(colliders[index], colliders[j]);
-                    if (collide.x)
+                    bool4 collisionDirection = SimplePhysics.Collision(colliders[index], colliders[j]);
+                    if (collisionDirection.x)
                     {
-                        collision.Top = true;
+                        value.y = -1f;
                     }
-                    if (collide.y)
+                    if (collisionDirection.y)
                     {
-                        collision.Bottom = true;
+                        value.y = 1f;
                     }
-                    if (collide.z)
+                    if (collisionDirection.z)
                     {
-                        collision.Left = true;
+                        value.x = 1f;
                     }
-                    if (collide.w)
+                    if (collisionDirection.w)
                     {
-                        collision.Right = true;
+                        value.x = -1f;
                     }
                 }
             }
+
+            collision.Value = value;
         }
     }
 
