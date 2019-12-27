@@ -8,31 +8,29 @@ using Unity.Transforms;
 public class PlayerControlSystem : JobComponentSystem
 {
     [BurstCompile]
-    struct PlayerControlSystemJob : IJobForEach<PlayerInput, Velocity>
+    struct PlayerControlSystemJob : IJobForEach<PlayerInput, Direction>
     {
 
-        public void Execute([ReadOnly] ref PlayerInput playerInput, ref Velocity velocity)
+        public void Execute([ReadOnly] ref PlayerInput playerInput, ref Direction direction)
         {
-            float3 direction = float3.zero;
+            direction.Value = float3.zero;
 
             if (playerInput.MoveUp)
             {
-                direction.y += 1f;
+                direction.Value.y += 1f;
             }
             if (playerInput.MoveDown)
             {
-                direction.y -= 1f;
+                direction.Value.y -= 1f;
             }
             if (playerInput.MoveLeft)
             {
-                direction.x -= 1f;
+                direction.Value.x -= 1f;
             }
             if (playerInput.MoveRight)
             {
-                direction.x += 1f;
+                direction.Value.x += 1f;
             }
-            
-            velocity.Direction = direction;
         }
     }
     

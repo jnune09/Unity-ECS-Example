@@ -9,12 +9,12 @@ public class ActorMoveToSystem : JobComponentSystem
 {
 
     [BurstCompile]
-    struct ActorMoveToSystemJob : IJobForEach<Target, Translation, Velocity>
+    struct ActorMoveToSystemJob : IJobForEach<Target, Translation, Direction>
     {
         public float deltaTime;
         [ReadOnly] public ComponentDataFromEntity<Translation> translationData;
         
-        public void Execute([ReadOnly] ref Target target, [ReadOnly] ref Translation translation, ref Velocity velocity)
+        public void Execute([ReadOnly] ref Target target, [ReadOnly] ref Translation translation, ref Direction direction)
         {
             if (!translationData.Exists(target.Entity))
             {
@@ -23,13 +23,13 @@ public class ActorMoveToSystem : JobComponentSystem
 
             Translation targetTranslation = translationData[target.Entity];
 
-            if (math.distance(translation.Value, targetTranslation.Value) > 16f)
+            if (math.distance(translation.Value, targetTranslation.Value) > 32f)
             {
-                velocity.Direction = targetTranslation.Value - translation.Value;
+                direction.Value = targetTranslation.Value - translation.Value;
             }
             else
             {
-                velocity.Direction = Unity.Mathematics.float3.zero;
+                direction.Value = Unity.Mathematics.float3.zero;
             }
         }
     }

@@ -12,8 +12,10 @@ public class AABBSystem : JobComponentSystem
     {
         public void Execute(ref AABB aabb, [ReadOnly] ref Translation translation)
         {
-            aabb.Min = translation.Value - 0.5f;
-            aabb.Max = translation.Value + 0.5f;
+            float3 min = new float3(-8f, -16f, 0);
+            float3 max = new float3(8f, 16f, 0);
+            aabb.Min = translation.Value + min;
+            aabb.Max = translation.Value + max;
         }
     }
     

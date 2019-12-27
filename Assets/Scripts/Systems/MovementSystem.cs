@@ -9,12 +9,15 @@ public class MovementSystem : JobComponentSystem
 {
 
     [BurstCompile]
-    struct MovementSystemJob : IJobForEach<Translation, Velocity>
+    struct MovementSystemJob : IJobForEach<Velocity, Translation>
     {
         public float deltaTime;
-        public void Execute(ref Translation translation, [ReadOnly] ref Velocity velocity)
+        public void Execute(
+            [ReadOnly] ref Velocity velocity,
+            ref Translation translation
+            )
         {
-            translation.Value += math.normalizesafe(velocity.Direction) * velocity.Speed * deltaTime;
+            translation.Value += velocity.Value * deltaTime;
         }
     }
     
