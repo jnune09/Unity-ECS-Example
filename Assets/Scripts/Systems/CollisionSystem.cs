@@ -19,7 +19,7 @@ public class CollisionSystem : JobComponentSystem
             // reset collision value
             collision.Value = float3.zero;
 
-            for (int j = index + 1; j < colliders.Length; j++)
+            for (int j = 0; j < colliders.Length; j++)
             {
                 if (SimplePhysics.Intersection(colliders[index].Value, colliders[j].Value))
                 {
