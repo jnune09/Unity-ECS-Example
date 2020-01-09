@@ -65,12 +65,15 @@ public class ActionBoxSystem : JobComponentSystem
             actionBox.Value.c0 = translation.Value + (actionBox.Direction * actionBox.Distance + actionBox.Offset);
             actionBox.Value.c1 = actionBox.Value.c0 + actionBox.Size;
 
+            actionBox.CoActor = Entity.Null;
+            //hasTarget = false;
 
             for (int i = 0; i < actorArray.Length; i++)
             {
                 if (SimplePhysics.Intersection(actionBox.Value, actorArray[i].hitBox))
                 {
                     actionBox.CoActor = actorArray[i].actor;
+                    //hasTarget = true;
                 }
             }
 

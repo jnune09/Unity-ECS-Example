@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
             typeof(Direction),
             typeof(HitBox),
             typeof(Hunger),
-            typeof(InteractBox),
             typeof(Inventory),
             typeof(LocalToWorld),
             typeof(PlayerInput),
@@ -63,7 +62,6 @@ public class GameManager : MonoBehaviour
         entityManager.SetComponentData(player, new ActionBox { Offset = -4f, Distance = 16f, Size = new float3(8, 8, 0) });
         entityManager.SetComponentData(player, new HitBox { Position = new float3(-8, -16, 0), Size = new float3(16, 32, 0) });
         entityManager.SetComponentData(player, new Hunger { Value = 10 });
-        entityManager.SetComponentData(player, new InteractBox { Offset = -4f, Distance = 16f, Size = new float3(8, 8, 0) });
         entityManager.SetComponentData(player, new Speed { Value = 80f });
         entityManager.SetComponentData(player, new Translation { Value = new float3(UnityEngine.Random.Range(100, 100), 5, 0) });
         entityManager.SetSharedComponentData(player, new RenderMesh { mesh = quadMesh, material = playerMaterial });
@@ -75,6 +73,7 @@ public class GameManager : MonoBehaviour
             typeof(ActorTag),
             typeof(AgentTag),
             typeof(AABB),
+            typeof(ActionBox),
             typeof(Collision),
             typeof(Direction),
             typeof(HitBox),
@@ -100,9 +99,11 @@ public class GameManager : MonoBehaviour
     public void SpawnVendor()
     {
         Entity vendor = entityManager.CreateEntity(
+            typeof(ActorTag),
             typeof(AABB),
             typeof(Collision),
             typeof(Direction),
+            typeof(HitBox),
             typeof(Hunger),
             typeof(Inventory),
             typeof(LocalToWorld),
