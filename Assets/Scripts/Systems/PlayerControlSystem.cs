@@ -32,7 +32,7 @@ public class PlayerControlSystem : JobComponentSystem
 
             if (playerInput.Attack)
             {
-                actionBox.ActionID = 1;
+                actionBox.ActionID = 2;
             }
             else
             {

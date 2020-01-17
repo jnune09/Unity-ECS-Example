@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 [Serializable]
-public struct Item : IComponentData
+public struct Hold : IComponentData
 {
-    public int Id;
+    public Entity Item;
 }

@@ -24,7 +24,6 @@ public class MainCamera : MonoBehaviour
         entityManager.SetComponentData<Camera>(camera, new Camera { Position = new float3(0, 0, -10) });
 
         speed = 5f;
-
     }
 
     // Update is called once per frame

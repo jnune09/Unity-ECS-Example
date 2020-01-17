@@ -9,16 +9,15 @@ using static Unity.Mathematics.math;
 // @update!
 public class PickUpSystem : JobComponentSystem
 {
-    struct PickUpSystemJob : IJobForEachWithEntity<Item, PickUp>
+    struct PickUpSystemJob : IJobForEachWithEntity<Item, PickUp, Translation>
     {
         [ReadOnly] public BufferFromEntity<Inventory> inventoryData;
         public EntityCommandBuffer.Concurrent buffer;
 
-        public void Execute(Entity entity, int index, [ReadOnly] ref Item item, ref PickUp pickUp)
+        public void Execute(Entity entity, int index, [ReadOnly] ref Item item, ref PickUp pickUp, ref Translation translation)
         {
-            //inventoryData[pickUp.Value].Add(new Inventory { Item = entity, Count = 1 });
-            //buffer.AddComponent<Item>(index, pickUp.Value, item);
-            buffer.DestroyEntity(index, entity);
+            buffer.AddComponent(index, pickUp.Value, new Hold { Item = entity }) ;
+            translation.Value += new float3(0,0.2f,0);
         }
     }
 
@@ -26,7 +25,8 @@ public class PickUpSystem : JobComponentSystem
 
     protected override void OnCreate()
     {
-        // get the end sim buffer from world
+
+
         endSimulationBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         base.OnCreate();

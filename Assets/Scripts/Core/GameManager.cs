@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
         SpawnFood();
 
         //print(Application.dataPath);
-        
     }
 
     public void SpawnPlayer()
@@ -45,9 +44,7 @@ public class GameManager : MonoBehaviour
             typeof(Velocity)
             );
 
-        Entity item = entityManager.CreateEntity();
-        entityManager.GetBuffer<Inventory>(player).Add(new Inventory { Item = item, Count = 7 });
-
+        entityManager.GetBuffer<Inventory>(player).Add(new Inventory { Id = 9, Count = 7 });
 
         entityManager.SetName(player, "Player");
         entityManager.SetComponentData(player, new Collision { Position = new float3(-6, -16, 0), Size = new float3(12, 2, 0) });
@@ -56,8 +53,8 @@ public class GameManager : MonoBehaviour
         entityManager.SetComponentData(player, new Hunger { Value = 10 });
         entityManager.SetComponentData(player, new Speed { Value = 80f });
         entityManager.SetComponentData(player, new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), 0, 0) });
-        entityManager.SetSharedComponentData(player, new RenderMesh { mesh = SimpleGraphics.CreateMesh(24, 48), material = characterMaterial });
 
+        entityManager.SetSharedComponentData(player, new RenderMesh { mesh = SimpleGraphics.CreateMesh(24, 48), material = characterMaterial });
     }
     
     public void SpawnActor()
@@ -79,16 +76,14 @@ public class GameManager : MonoBehaviour
             typeof(Velocity)
             );
 
-
-
         entityManager.SetComponentData(actor, new Collision { Position = new float3(-6, -16, 0), Size = new float3(12, 2, 0) });
         entityManager.SetComponentData(actor, new HitBox { Position = new float3(-8, -16, 0), Size = new float3(16, 32, 0) });
         entityManager.SetComponentData(actor, new Hunger { Value = 10 });
         entityManager.SetComponentData(actor, new Health { Value = 100 });
         entityManager.SetComponentData(actor, new Speed { Value = 60f });
         entityManager.SetComponentData(actor, new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), 0) });
-        entityManager.SetSharedComponentData(actor, new RenderMesh { mesh = SimpleGraphics.CreateMesh(24, 48), material = characterMaterial });
 
+        entityManager.SetSharedComponentData(actor, new RenderMesh { mesh = SimpleGraphics.CreateMesh(24, 48), material = characterMaterial });
     }
 
     public void SpawnFood()
@@ -105,9 +100,10 @@ public class GameManager : MonoBehaviour
 
         entityManager.SetComponentData(food, new Collision { Position = new float3(-4, -4, 0), Size = new float3(8, 8, 0) });
         entityManager.SetComponentData(food, new HitBox { Position = new float3(-8, -8, 0), Size = new float3(8, 8, 0) });
+        entityManager.SetComponentData(food, new Item { Id = 1 });
         entityManager.SetComponentData(food, new Translation { Value = new float3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), 0) });
-        entityManager.SetSharedComponentData(food, new RenderMesh { mesh = SimpleGraphics.CreateMesh(16, 16), material = foodMaterial });
 
+        entityManager.SetSharedComponentData(food, new RenderMesh { mesh = SimpleGraphics.CreateMesh(16, 16), material = foodMaterial });
     }
 
     void Update()
